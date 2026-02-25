@@ -7,6 +7,7 @@ format:
   html:
     toc: true
     number-sections: true
+    code-fold: true
   pdf:
     toc: true
     number-sections: true
@@ -24,6 +25,8 @@ bibliography: references.bib
 library(tidyverse)
 library(janitor)
 library(knitr)
+library(DT)
+library(htmltools)
 
 wdi <- read_csv("wdi.csv") |> clean_names()
 ```
@@ -168,3 +171,27 @@ This report analysed a sample of the World Development Indicators dataset for th
 The scatter plot suggested a positive association between GDP per capita and life expectancy, indicating that countries with higher income levels tend to exhibit better health outcomes. The bar chart further highlighted differences across regions, demonstrating inequality in development levels.
 
 Key summary statistics provided additional insight into the distribution and variability of the selected indicators. Overall, the analysis illustrates how reproducible research tools such as Quarto can effectively combine code, narrative, tables, and figures into a transparent and well-structured data science report.
+
+## Dashboard
+
+### Interactive data table
+
+```{r}
+#| label: tbl-dashboard
+#| echo: false
+
+if (knitr::is_html_output()) {
+  DT::datatable(
+  wdi|> select(country, gdp_per_capita, life_expectancy),
+  options = list(
+    pageLength = 10,
+    autoWidth = TRUE
+  ),
+  filter = "top"
+)
+  
+  } else {
+  knitr::kable(head(mtcars))
+}
+
+```

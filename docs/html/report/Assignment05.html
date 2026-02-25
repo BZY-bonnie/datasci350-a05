@@ -92,6 +92,34 @@ div.csl-indent {
 <script src="Assignment05_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Assignment05_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Assignment05_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Assignment05_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="Assignment05_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="Assignment05_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+
+<script src="Assignment05_files/libs/datatables-binding-0.33/datatables.js"></script>
+
+<script src="Assignment05_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="Assignment05_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<link href="Assignment05_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+
+<script src="Assignment05_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link href="Assignment05_files/libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+
+<script src="Assignment05_files/libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+
+<link href="Assignment05_files/libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+
+<script src="Assignment05_files/libs/selectize-0.12.0/selectize.min.js"></script>
+
+<link href="Assignment05_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="Assignment05_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
 
 
 </head>
@@ -118,8 +146,12 @@ div.csl-indent {
   </ul></li>
   <li><a href="#create-a-table" id="toc-create-a-table" class="nav-link" data-scroll-target="#create-a-table"><span class="header-section-number">4</span> Create a table</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
+  <li><a href="#dashboard" id="toc-dashboard" class="nav-link" data-scroll-target="#dashboard"><span class="header-section-number">6</span> Dashboard</a>
+  <ul class="collapse">
+  <li><a href="#interactive-data-table" id="toc-interactive-data-table" class="nav-link" data-scroll-target="#interactive-data-table"><span class="header-section-number">6.1</span> Interactive data table</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Assignment05.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Assignment05.html"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -157,14 +189,22 @@ div.csl-indent {
 <section id="load-the-dataset-using-your-preferred-programming-language-r-or-python." class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="load-the-dataset-using-your-preferred-programming-language-r-or-python."><span class="header-section-number">1</span> Load the dataset using your preferred programming language (R or Python).</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>wdi <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"wdi.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">clean_names</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(htmltools)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>wdi <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"wdi.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">clean_names</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wdi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "country"                         "inflation_rate"                 
  [3] "exports_gdp_share"               "gdp_growth_rate"                
@@ -181,7 +221,10 @@ div.csl-indent {
 <section id="indicator-1-gdp-per-capita" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="indicator-1-gdp-per-capita"><span class="header-section-number">2.1</span> Indicator 1: GDP per capita</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wdi<span class="sc">$</span>gdp_per_capita)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
     259    2571    7588   20346   25983  240862      14 </code></pre>
@@ -192,7 +235,10 @@ div.csl-indent {
 <section id="indicator-2-life-expectancy" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="indicator-2-life-expectancy"><span class="header-section-number">2.2</span> Indicator 2: Life expectancy</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wdi<span class="sc">$</span>life_expectancy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
   53.00   66.78   73.51   72.42   78.47   85.38       8 </code></pre>
@@ -203,7 +249,10 @@ div.csl-indent {
 <section id="indicator-3-income-inequality" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="indicator-3-income-inequality"><span class="header-section-number">2.3</span> Indicator 3: Income inequality</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wdi<span class="sc">$</span>income_inequality)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
   26.40   32.90   38.10   38.33   43.12   54.80     189 </code></pre>
@@ -298,7 +347,28 @@ Table&nbsp;1: Key summary statistics for selected indicators (2022). Source: Wor
 <p>This report analysed a sample of the World Development Indicators dataset for the year 2022. Three key indicators were explored using descriptive statistics and visualisations. The exploratory analysis revealed noticeable variation across countries, particularly in economic and demographic measures.</p>
 <p>The scatter plot suggested a positive association between GDP per capita and life expectancy, indicating that countries with higher income levels tend to exhibit better health outcomes. The bar chart further highlighted differences across regions, demonstrating inequality in development levels.</p>
 <p>Key summary statistics provided additional insight into the distribution and variability of the selected indicators. Overall, the analysis illustrates how reproducible research tools such as Quarto can effectively combine code, narrative, tables, and figures into a transparent and well-structured data science report.</p>
+</section>
+<section id="dashboard" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="dashboard"><span class="header-section-number">6</span> Dashboard</h2>
+<section id="interactive-data-table" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="interactive-data-table"><span class="header-section-number">6.1</span> Interactive data table</h3>
+<div class="cell">
+<div id="tbl-dashboard" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2
+</figcaption>
+<div aria-describedby="tbl-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-d12a9aed3b351ef3ffb4" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d12a9aed3b351ef3ffb4">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"259.025031363087\" data-max=\"240862.18244774\" data-scale=\"12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"52.997\" data-max=\"85.377\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217"],["Afghanistan","Albania","Algeria","American Samoa","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas, The","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei Darussalam","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Cayman Islands","Central African Republic","Chad","Channel Islands","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Curacao","Cyprus","Czechia","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt, Arab Rep.","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Faroe Islands","Fiji","Finland","France","French Polynesia","Gabon","Gambia, The","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hong Kong SAR, China","Hungary","Iceland","India","Indonesia","Iran, Islamic Rep.","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea, Dem. People's Rep.","Korea, Rep.","Kosovo","Kuwait","Kyrgyz Republic","Lao PDR","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macao SAR, China","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia, Fed. Sts.","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Macedonia","Northern Mariana Islands","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Romania","Russian Federation","Rwanda","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Sint Maarten (Dutch part)","Slovak Republic","Slovenia","Solomon Islands","Somalia","South Africa","South Sudan","Spain","Sri Lanka","St. Kitts and Nevis","St. Lucia","St. Martin (French part)","St. Vincent and the Grenadines","Sudan","Suriname","Sweden","Switzerland","Syrian Arab Republic","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkiye","Turkmenistan","Turks and Caicos Islands","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Venezuela, RB","Viet Nam","Virgin Islands (U.S.)","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],[352.603733092107,6810.11404104233,5023.25293164928,19673.3901023197,42350.6970690874,2933.48464381415,19919.7266867883,13650.6046294524,7018.05150434798,33300.8388187011,65077.676668821,52084.6811953372,7770.594223351,32041.2503902591,30146.925026365,2687.89906307087,20738.4511868198,7994.64806074889,49942.0906424887,6984.21695968163,1304.99479694323,123091.123516,3704.01839495326,3600.12163502163,7587.58817346075,7726.11099664689,9065.497333954039,null,37152.4769749763,13974.4492487792,830.043965850311,259.025031363088,3883.91115917161,1759.60802346044,1563.48894034459,55509.393176404,96073.7635946963,427.058096191269,699.463254485574,64501.2742419548,15411.1739539112,12662.5831692254,6657.08669677355,1484.89246532042,664.593543336696,2649.23063369467,13365.3563992546,2491.89593372995,18673.1779905036,null,20492.815311294,32048.248046875,27226.6156386023,67790.05399232759,3278.138695825,8347.323360315369,10111.2457110261,6476.64457530137,4295.40749561014,5048.443972532,8052.25652929933,null,28114.1431760201,3986.88723918267,1027.49863136325,66979.2773224808,5356.16438036291,50734.7107480889,40886.2532680273,18984.8510962405,8820.34733809998,803.8086550064789,6729.84659930283,48717.9911402128,2218.41475790993,null,20867.2690861087,null,9762.4147210397,40227.2753734558,5473.20856444589,1515.16794777612,814.111990051955,18199.4748396968,1748.25713539751,3012.21734086324,48828.1212454445,18355.8278072065,75135.0916136358,2366.30960899931,4787.91236404903,4668.45744305826,6441.91736451813,103983.29133582,null,54930.9388075096,35068.8359738449,6047.2164436428,34017.2718075024,4311.0000506816,11484.4168149009,2099.29856841025,2061.39304132408,null,32394.6833725203,5290.97739696474,42823.8278348699,1739.79999970559,2054.43078086496,21508.4003332167,3823.93806860546,992.857328462257,754.53284857226,8211.38094790285,187267.132380803,25078.7453655669,125006.021815486,35192.5278350868,516.772196977613,643.433195658657,11993.1876132994,11780.8169089988,831.223466645115,34563.3966270232,6225.17922244115,2057.38039245817,10239.7970461095,11476.6788057764,3766.51133457132,5715.28022054154,240862.18244774,5045.50472602069,10093.4387007266,3441.99145507813,558.298592504349,1149.01896107058,4895.68066089139,12142.769929785,1348.15718956035,57025.01245598,35745.8489248912,48216.5095836302,2252.31020571776,588.899048266729,2162.6337321033,7485.6034579418,null,108798.451165901,25056.7948608378,1589.26398049714,13421.9722911546,17357.6286293985,3115.92292253449,6187.0660296399,7239.11131130898,3499.10727950801,18732.4977273198,24515.2657495716,35268.0791015719,87480.4197119462,15692.3071700143,15445.2421875,966.571293318523,3745.56036746313,null,2386.6961758184,30447.8823171601,1594.98515311153,9537.68431879504,17167.1909760833,475.795727844622,88428.7024226232,37592.6608071757,21279.4589247729,28439.3340989687,2162.6661301834,592.103121972141,6766.48125428394,null,29674.5442864413,3342.72012524497,20593.609115757,13030.9289500727,null,9297.84692916259,1102.24536132813,5858.82466074423,56299.5057328064,93259.9057183024,null,1076.43469114729,1193.35961914063,6913.05080521119,2389.2958750343,923.2403711502581,4681.67940711244,19629.4653400829,3607.91023773078,10674.5041731531,8792.5485039672,26886.514735383,5221.53306995807,964.354146526666,4575.97509765625,53707.9800813801,45564.1569448013,77246.6738828672,20499.2422244452,2276.16123306477,3128.54042205837,null,4179.01179036963,null,3799.95527015163,698.8503499652491,1456.90157026157,1676.82148896788],[62.879,76.833,77.129,null,null,61.929,79.236,76.06399999999999,73.372,74.992,83.2,81.0926829268293,73.488,74.358,79.246,73.69799999999999,77.706,73.1114634146342,81.6975609756098,70.962,59.954,81.571,72.229,64.928,75.29300000000001,65.913,73.425,76.373,74.551,74.3609756097561,59.766,61.977,74.72199999999999,69.896,60.958,81.2956097560976,null,54.477,52.997,81.583,79.51900000000001,78.587,73.65900000000001,63.68,59.743,63.053,77.31999999999999,58.916,77.57560975609761,78.155,null,81.889,79.0292682926829,81.30487804878049,62.859,72.98099999999999,74.17,77.89400000000001,70.15900000000001,71.47499999999999,61.19,66.604,77.9439024390244,56.36,65.645,83.3,68.312,81.18780487804879,82.2292682926829,83.55,65.694,62.906,71.587,80.7056097560976,63.945,82.83,80.6365853658537,71.5404878048781,75.33499999999999,78.33,68.67400000000001,58.985,59.861,65.989,63.728,70.72799999999999,83.66097560975609,76.01707317073171,82.1707317073171,67.744,68.25,74.556,71.336,83.0560975609756,80.762,82.7,82.90000000000001,70.629,83.99634146341459,74.215,74.44,62.055,67.661,73.578,82.6804878048781,79.524,80.264,72.0487804878049,68.999,74.580487804878,74.416,53.036,61.1,72.151,84.319512195122,75.7926829268293,83.04634146341461,85.377,65.23,62.898,76.26000000000001,80.839,59.417,82.7,65.146,64.691,73.51463414634151,74.83199999999999,70.925,68.621,null,72.667,76.18780487804879,74.973,59.625,67.256,58.059,64.014,70.48399999999999,81.7146341463415,80.9820731707317,82.7609756097561,74.61499999999999,62.08,53.633,74.4248780487805,null,82.5609756097561,73.935,66.431,null,76.82599999999999,65.958,70.47499999999999,73.38500000000001,72.187,77.30487804878049,81.5804878048781,79.72,81.559,75.30487804878049,72.5456097560976,67.129,72.598,null,68.794,77.905,67.913,75.48219512195119,73.8487804878049,60.411,82.89512195121949,74.40900000000001,77.0658536585366,81.28292682926831,70.742,56.107,61.48,55.567,83.0829268292683,76.61,72.027,71.294,80.55,68.97199999999999,65.578,70.289,83.109756097561,83.45365853658539,72.3,71.288,66.782,79.68000000000001,69.056,61.588,71.27,74.708,74.26300000000001,78.47499999999999,69.41,74.925,64.854,63.638,68.5879268292683,79.196,82.0585365853659,77.4341463414634,78,71.67400000000001,70.492,71.105,74.58,80.319512195122,73.444,63.72,61.803,59.391]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>country<\/th>\n      <th>gdp_per_capita<\/th>\n      <th>life_expectancy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"country","targets":1},{"name":"gdp_per_capita","targets":2},{"name":"life_expectancy","targets":3}],"order":[],"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</figure>
+</div>
+</div>
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
