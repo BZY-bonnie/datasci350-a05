@@ -1,0 +1,169 @@
+---
+title: "WDI 2022 Indicators Report"
+author: "Bonnie Bao"
+date: "2026-02-25"
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    toc: true
+    number-sections: true
+bibliography: references.bib
+---
+
+## Load the dataset using your preferred programming language (R or Python).
+
+```{r}
+#| label: setup
+#| echo: true
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+library(knitr)
+
+wdi <- read_csv("wdi.csv") |> clean_names()
+```
+
+```{r}
+#| label: check-columns
+#| echo: true
+
+names(wdi)
+```
+
+## Exploratory Data Analysis (EDA)
+
+### Indicator 1: GDP per capita
+
+```{r}
+#| label: eda-gdp
+#| echo: true
+
+summary(wdi$gdp_per_capita)
+```
+
+**Finding:** GDP per capita varies dramatically across countries in 2022. The minimum value is 259, while the maximum reaches 240,862, indicating extreme disparities in economic development. The mean GDP per capita (20,346) is substantially higher than the median (7,588), suggesting a right-skewed distribution driven by a small number of very wealthy countries.
+
+### Indicator 2: Life expectancy
+
+```{r}
+#| label: eda-life
+#| echo: true
+
+summary(wdi$life_expectancy)
+```
+
+**Finding:** Life expectancy ranges from 53.00 to 85.38 years, with a mean of 72.42 years and a median of 73.51 years. The relatively small difference between the mean and median suggests that life expectancy is more evenly distributed compared to GDP per capita. Most countries cluster around the middle range (approximately 67 to 78 years).
+
+### Indicator 3: Income inequality
+
+```{r}
+#| label: eda-inequality
+#| echo: true
+
+summary(wdi$income_inequality)
+```
+
+**Finding:** Income inequality varies from 26.40 to 54.80, with a mean of 38.33 and a median of 38.10. The close similarity between the mean and median suggests a relatively symmetric distribution. However, a large number of missing values (189) may limit the reliability of conclusions drawn from this indicator.
+
+## Create two charts
+
+### Relationship Between GDP per Capita and Life Expectancy
+
+@fig-scatter-gdp-life illustrates the association between GDP per capita and life expectancy in 2022. There appears to be a positive relationship: countries with higher income levels tend to have longer life expectancy. However, the relationship appears to level off at higher income levels, suggesting diminishing returns of income on longevity. The data are sourced from the World Development Indicators database [@worldbank_wdi].
+
+```{r}
+#| label: fig-scatter-gdp-life
+#| echo: false
+#| fig-cap: "GDP per capita vs Life expectancy in 2022 (WDI sample). Source: World Bank WDI."
+#| warning: false
+#| message: false
+#| fig-width: 5
+#| fig-height: 3
+#| fig-pos: H
+
+ggplot(wdi, aes(x = gdp_per_capita, y = life_expectancy)) +
+  geom_point() +
+  labs(
+    title = "GDP per capita vs Life expectancy (2022)",
+    x = "GDP per capita",
+    y = "Life expectancy"
+  )+ scale_x_log10()
+```
+
+### GDP per Capita by Unemployment Category
+
+@fig-bar-unemployment-gdp compares the average GDP per capita across unemployment rate categories. Countries with lower unemployment rates tend to have higher average GDP per capita, while countries with higher unemployment show lower average income levels. This pattern suggests a potential macroeconomic relationship between labor market conditions and national income levels. The data are obtained from the World Development Indicators [@worldbank_wdi].
+
+```{r}
+#| label: fig-bar-unemployment-gdp
+#| echo: false
+#| fig-cap: "Average GDP per capita by unemployment rate category in 2022. Source: World Bank WDI."
+#| warning: false
+#| message: false
+#| fig-pos: H
+
+wdi |>
+  mutate(
+    unemployment_group = case_when(
+      unemployment_rate < 5 ~ "Low unemployment (<5%)",
+      unemployment_rate < 10 ~ "Medium unemployment (5–10%)",
+      unemployment_rate >= 10 ~ "High unemployment (>=10%)",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  group_by(unemployment_group) |>
+  filter(!is.na(unemployment_group)) |>
+  summarise(avg_gdp_pc = mean(gdp_per_capita, na.rm = TRUE)) |>
+  ggplot(aes(x = unemployment_group, y = avg_gdp_pc)) +
+  geom_col() +
+  labs(
+    title = "Average GDP per Capita by Unemployment Category (2022)",
+    x = "Unemployment Category",
+    y = "Average GDP per Capita"
+  ) + 
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
+```
+
+## Create a table
+
+```{r}
+#| label: tbl-key-stats
+#| echo: false
+
+key_stats <- tibble(
+  indicator = c("gdp_per_capita", "life_expectancy"),
+  mean = c(
+    mean(wdi$gdp_per_capita, na.rm = TRUE),
+    mean(wdi$life_expectancy, na.rm = TRUE)
+  ),
+  median = c(
+    median(wdi$gdp_per_capita, na.rm = TRUE),
+    median(wdi$life_expectancy, na.rm = TRUE)
+  ),
+  sd = c(
+    sd(wdi$gdp_per_capita, na.rm = TRUE),
+    sd(wdi$life_expectancy, na.rm = TRUE)
+  )
+)
+
+kable(
+  key_stats,
+  caption = "Key summary statistics for selected indicators (2022). Source: World Bank WDI."
+)
+```
+
+As shown in @fig-scatter-gdp-life, countries with higher GDP per capita tend to have higher life expectancy. @tbl-key-stats summarises the key statistics used in this report.
+
+This report uses a sample of the World Development Indicators dataset [@worldbank_wdi] and is authored using Quarto [@quarto].
+
+## Conclusion
+
+This report analysed a sample of the World Development Indicators dataset for the year 2022. Three key indicators were explored using descriptive statistics and visualisations. The exploratory analysis revealed noticeable variation across countries, particularly in economic and demographic measures.
+
+The scatter plot suggested a positive association between GDP per capita and life expectancy, indicating that countries with higher income levels tend to exhibit better health outcomes. The bar chart further highlighted differences across regions, demonstrating inequality in development levels.
+
+Key summary statistics provided additional insight into the distribution and variability of the selected indicators. Overall, the analysis illustrates how reproducible research tools such as Quarto can effectively combine code, narrative, tables, and figures into a transparent and well-structured data science report.

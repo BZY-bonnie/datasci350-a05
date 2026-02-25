@@ -1,0 +1,120 @@
+---
+title: "WDI 2022: Key Findings"
+author: "Bonnie Bao"
+date: "2026-02-25"
+format:
+  revealjs:
+    theme: solarized
+    transition: fade
+---
+
+## Overview
+
+-   Dataset: WDI sample (2022)
+-   Focus: 3 indicators + key patterns
+-   Outputs: report + slides
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+library(knitr)
+
+wdi <- read_csv("wdi.csv") |> clean_names()
+```
+
+## EDA Highlights
+
+-   GDP per capita shows large variability
+-   Life expectancy differs across countries/regions
+-   Population is highly skewed
+
+------------------------------------------------------------------------
+
+## Visual Findings
+
+```{r}
+#| label: fig-scatter-gdp-life
+#| echo: false
+#| fig-cap: "GDP per capita vs Life expectancy in 2022 (WDI sample). Source: World Bank WDI."
+#| warning: false
+#| message: false
+
+ggplot(wdi, aes(x = gdp_per_capita, y = life_expectancy)) +
+  geom_point() +
+  labs(
+    title = "GDP per capita vs Life expectancy (2022)",
+    x = "GDP per capita",
+    y = "Life expectancy"
+  )+ scale_x_log10()
+```
+
+---
+
+```{r}
+#| label: fig-bar-unemployment-gdp
+#| echo: false
+#| fig-cap: "Average GDP per capita by unemployment rate category in 2022. Source: World Bank WDI."
+#| warning: false
+#| message: false
+
+wdi |>
+  mutate(
+    unemployment_group = case_when(
+      unemployment_rate < 5 ~ "Low unemployment (<5%)",
+      unemployment_rate < 10 ~ "Medium unemployment (5–10%)",
+      unemployment_rate >= 10 ~ "High unemployment (>=10%)",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  group_by(unemployment_group) |>
+  filter(!is.na(unemployment_group)) |>
+  summarise(avg_gdp_pc = mean(gdp_per_capita, na.rm = TRUE)) |>
+  ggplot(aes(x = unemployment_group, y = avg_gdp_pc)) +
+  geom_col() +
+  labs(
+    title = "Average GDP per Capita by Unemployment Category (2022)",
+    x = "Unemployment Category",
+    y = "Average GDP per Capita"
+  ) + 
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
+```
+
+---
+
+```{r}
+#| label: tbl-key-stats
+#| echo: false
+
+key_stats <- tibble(
+  indicator = c("gdp_per_capita", "life_expectancy"),
+  mean = c(
+    mean(wdi$gdp_per_capita, na.rm = TRUE),
+    mean(wdi$life_expectancy, na.rm = TRUE)
+  ),
+  median = c(
+    median(wdi$gdp_per_capita, na.rm = TRUE),
+    median(wdi$life_expectancy, na.rm = TRUE)
+  ),
+  sd = c(
+    sd(wdi$gdp_per_capita, na.rm = TRUE),
+    sd(wdi$life_expectancy, na.rm = TRUE)
+  )
+)
+
+kable(
+  key_stats,
+  caption = "Key summary statistics for selected indicators (2022). Source: World Bank WDI."
+)
+```
+
+------------------------------------------------------------------------
+
+## Conclusion
+
+-   Summarised key patterns in 2022 indicators
+-   Created reproducible report + slides in Quarto
